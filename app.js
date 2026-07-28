@@ -53,17 +53,43 @@ function calcTraverse(){safe(()=>{
   }
   if(lines.length<2)throw Error('Masukkan sekurang-kurangnya 2 garisan');
   const sumN=lines.reduce((s,l)=>s+l.dn,0),sumE=lines.reduce((s,l)=>s+l.de,0);
-  const closeN=-sumN,closeE=-sumE,dist=Math.hypot(closeN,closeE),az=Math.atan2(closeE,closeN)*180/Math.PI;
+  const closeN=-sumN,closeE=-sumE,linearMisclosure=Math.hypot(closeN,closeE),az=Math.atan2(closeE,closeN)*180/Math.PI;
+
+  // Bentuk koordinat relatif daripada titik mula (E=0, N=0).
+  // Translasi koordinat tidak mengubah perimeter atau keluasan.
+  const points=[{e:0,n:0}];
+  let currentE=0,currentN=0;
+  for(const line of lines){
+    currentN+=line.dn;
+    currentE+=line.de;
+    points.push({e:currentE,n:currentN});
+  }
+  let twiceArea=0;
+  for(let i=0;i<points.length;i++){
+    const a=points[i],b=points[(i+1)%points.length];
+    twiceArea+=a.e*b.n-b.e*a.n;
+  }
+  const area=Math.abs(twiceArea)/2;
+  const measuredDistance=lines.reduce((s,l)=>s+l.distance,0);
+  const perimeter=measuredDistance+linearMisclosure;
+  const precision=linearMisclosure>0?measuredDistance/linearMisclosure:Infinity;
+
   const details=lines.map(l=>`${String(l.no).padStart(2,'0')}  ΔN ${l.dn.toFixed(4).padStart(11)}   ΔE ${l.de.toFixed(4).padStart(11)}`).join('\n');
   out(`${details}
 -----------------------------------
 Jumlah ΔN = ${sumN.toFixed(4)}
 Jumlah ΔE = ${sumE.toFixed(4)}
+Jumlah jarak garisan = ${measuredDistance.toFixed(3)}
 
 Bearing penutup = ${dmsWholeSecond(az)} (1″ terhampir)
-Jarak penutup = ${dist.toFixed(3)}
+Jarak penutup = ${linearMisclosure.toFixed(3)}
 ΔN penutup = ${closeN.toFixed(4)}
-ΔE penutup = ${closeE.toFixed(4)}`)
+ΔE penutup = ${closeE.toFixed(4)}
+
+Tikaian lurus = ${linearMisclosure.toFixed(3)}
+Nisbah tikaian = ${isFinite(precision)?`1 : ${Math.round(precision).toLocaleString('en-US')}`:'Tutup sempurna'}
+Perimeter trabas = ${perimeter.toFixed(3)}
+Keluasan trabas = ${area.toFixed(3)} unit²`)
 })}
 function calcBgCoord(){safe(()=>{const a=degFromDms(n('b'))*Math.PI/180,D=n('d');out(`Northing 2 = ${(n('n1')+D*Math.cos(a)).toFixed(4)}\nEasting 2  = ${(n('e1')+D*Math.sin(a)).toFixed(4)}`)})}
 function calcCoordBg(){safe(()=>{const dn=n('n2')-n('n1'),de=n('e2')-n('e1'),dist=Math.hypot(dn,de),az=Math.atan2(de,dn)*180/Math.PI;out(`Bearing DDD.MMSS = ${dmsFromDeg(az)}\nBearing decimal = ${((az%360+360)%360).toFixed(8)}°\nJarak = ${dist.toFixed(4)}`)})}
@@ -73,4 +99,4 @@ function calcArea(){safe(()=>{const pts=document.getElementById('coords').value.
 function calcIntersection(){safe(()=>{const x1=n('x1'),y1=n('y1'),x2=n('x2'),y2=n('y2'),x3=n('x3'),y3=n('y3'),x4=n('x4'),y4=n('y4');const den=(x1-x2)*(y3-y4)-(y1-y2)*(x3-x4);if(Math.abs(den)<1e-12)throw Error('Garisan selari atau bertindih');const t=((x1*y2-y1*x2)*(x3-x4)-(x1-x2)*(x3*y4-y3*x4))/den,u=((x1*y2-y1*x2)*(y3-y4)-(y1-y2)*(x3*y4-y3*x4))/den;out(`Easting = ${t.toFixed(4)}\nNorthing = ${u.toFixed(4)}`)})}
 function calcCircle(){safe(()=>{const x1=n('x1'),y1=n('y1'),x2=n('x2'),y2=n('y2'),x3=n('x3'),y3=n('y3');const d=2*(x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2));if(Math.abs(d)<1e-12)throw Error('Tiga titik segaris');const ux=((x1*x1+y1*y1)*(y2-y3)+(x2*x2+y2*y2)*(y3-y1)+(x3*x3+y3*y3)*(y1-y2))/d;const uy=((x1*x1+y1*y1)*(x3-x2)+(x2*x2+y2*y2)*(x1-x3)+(x3*x3+y3*y3)*(x2-x1))/d;out(`Easting pusat = ${ux.toFixed(4)}\nNorthing pusat = ${uy.toFixed(4)}\nJejari = ${Math.hypot(ux-x1,uy-y1).toFixed(4)}`)})}
 function notReady(){out('Belum diaktifkan — menunggu pengesahan formula asal.')}function clearResult(){out('Sedia.')}function home(){panel.classList.add('hidden');menu.classList.remove('hidden')}
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js?v=031');let deferred;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;installBtn.hidden=false});installBtn.onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;installBtn.hidden=true}};
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js?v=032');let deferred;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;installBtn.hidden=false});installBtn.onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;installBtn.hidden=true}};
