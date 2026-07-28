@@ -1,4 +1,4 @@
-# mSurvey PWA v0.1
+# mSurvey PWA v0.3
 
 Versi awal aplikasi ukur untuk PC, Android dan iPhone melalui pelayar/PWA.
 
@@ -26,3 +26,10 @@ Format bearing asal DDD.MMSS disokong.
 - Modul Ukur Trabas diaktifkan untuk dua bearing/jarak.
 - Bearing penutup dibundarkan kepada 1 saat terhampir.
 - Jarak dipaparkan kepada 0.001 unit.
+
+
+## v0.3
+- Modul Ukur Trabas menyokong bilangan garisan dinamik.
+- Butang Tambah Garisan, buang baris dan kosongkan semua.
+- Paparan ΔN dan ΔE bagi setiap garisan serta jumlah keseluruhan.
+- Bearing penutup dibundarkan kepada 1 saat dan jarak kepada 0.001 unit.
