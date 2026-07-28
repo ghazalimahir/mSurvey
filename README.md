@@ -20,3 +20,9 @@ Berfungsi: BG/JK ke koordinat, koordinat ke BG/JK, titik tengah, luas poligon, p
 Belum diaktifkan sehingga formula APK disahkan: ukur trabas, hilang ke jarak, sekan lebar sama/beza dan sudut dalam.
 
 Format bearing asal DDD.MMSS disokong.
+
+
+## v0.2
+- Modul Ukur Trabas diaktifkan untuk dua bearing/jarak.
+- Bearing penutup dibundarkan kepada 1 saat terhampir.
+- Jarak dipaparkan kepada 0.001 unit.
