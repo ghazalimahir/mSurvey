@@ -1,35 +1,14 @@
-# mSurvey PWA v0.3
+# mSurvey PWA v0.3.1 CLEAN
 
-Versi awal aplikasi ukur untuk PC, Android dan iPhone melalui pelayar/PWA.
+Pakej kemas kini bersih untuk GitHub Pages.
 
-## Jalankan
-Buka folder ini dengan pelayan web tempatan, contohnya:
+## Perubahan
+- Ukur Trabas menyokong banyak garisan.
+- Butang **+ Tambah Garisan** dan buang baris.
+- Bearing penutup dibundarkan kepada 1 saat.
+- Jarak penutup dipaparkan kepada 0.001 unit.
+- Cache PWA dinaik taraf kepada `msurvey-v0.3.1` dan mengutamakan fail terkini dari rangkaian.
 
-```bash
-python -m http.server 8080
-```
-
-Kemudian buka `http://localhost:8080`.
-
-## Netlify
-Seret folder ini ke Netlify Drop atau sambungkan repositori GitHub. Publish directory ialah `.`.
-
-## Status formula
-Berfungsi: BG/JK ke koordinat, koordinat ke BG/JK, titik tengah, luas poligon, persilangan garisan, pusat bulatan, ukur aras asas.
-
-Belum diaktifkan sehingga formula APK disahkan: ukur trabas, hilang ke jarak, sekan lebar sama/beza dan sudut dalam.
-
-Format bearing asal DDD.MMSS disokong.
-
-
-## v0.2
-- Modul Ukur Trabas diaktifkan untuk dua bearing/jarak.
-- Bearing penutup dibundarkan kepada 1 saat terhampir.
-- Jarak dipaparkan kepada 0.001 unit.
-
-
-## v0.3
-- Modul Ukur Trabas menyokong bilangan garisan dinamik.
-- Butang Tambah Garisan, buang baris dan kosongkan semua.
-- Paparan ΔN dan ΔE bagi setiap garisan serta jumlah keseluruhan.
-- Bearing penutup dibundarkan kepada 1 saat dan jarak kepada 0.001 unit.
+## Upload ke GitHub
+Upload semua fail yang kelihatan dalam folder ini terus ke root repository `mSurvey`.
+Jangan upload folder luarnya dan jangan upload fail ZIP.
